@@ -1,9 +1,10 @@
 # A lightweight Alpine-based graphical Python 3 workstation
-# Updated on 2019-09-02
+# Updated on 2019-09-09
 # R. Solano <ramon.solano@gmail.com>
 #
 # Provides:
-#	Python3, ipython, jupyter, firefox, spyder, numpy, matplotlib, scipy, pandas, plotly
+#	Python3, ipython, jupyter, firefox, spyder, numpy, matplotlib, scipy, 
+#	pandas, plotly
 
 # For python2, add:
 # sudo apk add python python-dev py2-pip py-numpy py-numpy-dev gcc gfortran \
@@ -27,7 +28,7 @@ RUN \
 	# upgrade pip
 	&& sudo python3 -m pip install --upgrade pip \
 	#
-	# remaining packages (matplotlib, ipython, scipy, pandas, jupyter, plotly, spyder ..)
+	# remaining packages (matplotlib, ipython, scipy, pandas, jupyter ..)
 	&& python3 -m pip install matplotlib ipython cairocffi \
 	&& apk add py3-scipy \
 	&& python3 -m pip install pandas \
@@ -38,7 +39,12 @@ RUN \
 	&& apk add py3-qt5 py3-qtwebengine \
 	&& apk add openssl openssl-dev \
 	&& python3 -m pip install spyder
-	
+
+# nano syntax support	
+RUN apk add nano-syntax \
+	&& echo "include /usr/share/nano/python.nanorc" >> /home/alpine/.nanorc \
+	&& echo "include /usr/share/nano/c.nanorc" >> /home/alpine/.nanorc \
+	&& echo "include /usr/share/nano/sh.nanorc" >> /home/alpine/.nanorc
 
 # ports (SSH, VNC, Jupyter) 
 EXPOSE 22 5900 8888

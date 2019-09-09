@@ -6,7 +6,7 @@ Based on [rsolano/alpine-slim-vnc](https://hub.docker.com/r/rsolano/alpine-slim-
 
 *Ramon Solano <<ramon.solano@gmail.com>>*
 
-**Last update:** Sep/2/2019   
+**Last update:** Sep/9/2019   
 **Alpine version:** 3.10
 
 ## Main packages
