@@ -14,7 +14,12 @@
 # sudo apk add py2-scipy
 # sudo python2 -m pip install  pandas
 
-FROM rsolano/alpine-vnc
+#
+# su - alpine:alpine
+
+#
+# source rsolano/alpine-vnc
+FROM dennislwm/conda-vnc
 
 RUN \
 	# update sys
@@ -22,23 +27,21 @@ RUN \
 	&& apk upgrade \
 	#
 	# python3 and support for compiling matplotlib
-	&& apk add python3 python3-dev py3-numpy py-numpy-dev py-gobject3 \
+	&& apk add python3 python3-dev py3-numpy py3-numpy-dev py-gobject3 \
 	gcc gfortran freetype-dev libpng-dev build-base libffi-dev \
 	#
 	# upgrade pip
 	&& sudo python3 -m pip install --upgrade pip \
 	#
-	# remaining packages (matplotlib, ipython, scipy, pandas, jupyter ..)
+	# remaining packages (matplotlib, ipython, scipy, pandas ..)
 	&& python3 -m pip install matplotlib ipython cairocffi \
 	&& apk add py3-scipy \
 	&& python3 -m pip install pandas \
-	&& python3 -m pip install jupyter \
 	&& apk add firefox-esr \
 	&& python3 -m pip install plotly \
 	# ?
 	&& apk add py3-qt5 py3-qtwebengine \
-	&& apk add openssl openssl-dev \
-	&& python3 -m pip install spyder
+	&& apk add openssl openssl-dev
 
 # nano syntax support	
 RUN apk add nano-syntax \
@@ -46,8 +49,8 @@ RUN apk add nano-syntax \
 	&& echo "include /usr/share/nano/c.nanorc" >> /home/alpine/.nanorc \
 	&& echo "include /usr/share/nano/sh.nanorc" >> /home/alpine/.nanorc
 
-# ports (SSH, VNC, Jupyter) 
-EXPOSE 22 5900 8888
+# ports (SSH, VNC) 
+EXPOSE 22 5900
 
 # default command
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
